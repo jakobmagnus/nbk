@@ -13,8 +13,6 @@ const escapeHTML = (s) => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<
 const mapURL = 'https://www.google.com/maps/search/?api=1&query=Nockebyhovs+B%C3%A5tklubb+Gr%C3%B6nviksv%C3%A4gen+192+Bromma';
 const main = document.querySelector('main');
 const themeToggle = document.querySelector('.theme-toggle');
-const menuToggle = document.querySelector('.menu-toggle');
-const mobileNav = document.querySelector('.mobile-nav');
 const photoDialog = document.querySelector('#photo-dialog');
 document.querySelector('.skip-link').addEventListener('click', e => {
   e.preventDefault();
@@ -46,23 +44,6 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
 updateThemeButton();
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-function closeMenu() {
-  mobileNav.hidden = true;
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.setAttribute('aria-label', 'Öppna menyn');
-}
-menuToggle.addEventListener('click', () => {
-  const open = mobileNav.hidden;
-  mobileNav.hidden = !open;
-  menuToggle.setAttribute('aria-expanded', String(open));
-  menuToggle.setAttribute('aria-label', open ? 'Stäng menyn' : 'Öppna menyn');
-});
-mobileNav.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && !mobileNav.hidden) { closeMenu(); menuToggle.focus(); }
-});
-matchMedia('(min-width: 761px)').addEventListener('change', e => { if (e.matches) closeMenu(); });
-
 const photos = [
   ['20200910_201942.jpg', 'Kvällsljus över hamnen'],
   ['20200910_132642.jpg', 'Livet längs bryggan'],
@@ -77,7 +58,7 @@ const photos = [
 function homeView() {
   return `<div class="wrap">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-intro"><h1 id="hero-title">En plats vid vattnet.<br><em>En paus från allt annat.</em></h1><div class="hero-copy"><p>Välkommen till Nockebyhovs Båtklubb.<br>För båtlivet, gemenskapen och de där<br>stunderna som gärna får ta lite längre tid.</p><a class="text-link" href="#klubben">Lär känna vår klubb ${arrow}</a></div></div>
+      <h1 class="sr-only" id="hero-title">Nockebyhovs Båtklubb</h1>
       <figure class="hero-image"><img src="/assets/photos/20220806_133221.jpg" width="2000" height="946" alt="Nockebyhovs båtklubbs bryggor och båtar, omgivna av vatten och grönska" fetchpriority="high"><figcaption class="image-caption"><div><p class="eyebrow">EN LITEN HAMN. MYCKET ATT TYCKA OM.</p><p>Grönviksvägen 192, Bromma</p></div><span class="compass" aria-hidden="true">↗</span></figcaption></figure>
       <nav class="quick-links" aria-label="Snabbval"><a class="quick-link" href="#medlem"><div><h2>En plats för din båt</h2><p>Medlemskap & båtplats</p></div><span class="arrow" aria-hidden="true">↗</span></a><a class="quick-link" href="#dokument"><div><h2>Bra att ha till hands</h2><p>Dokument, regler & intyg</p></div><span class="arrow" aria-hidden="true">↗</span></a><a class="quick-link" href="#kontakt"><div><h2>Vi finns här</h2><p>Kontakt & hitta hit</p></div><span class="arrow" aria-hidden="true">↗</span></a></nav>
     </section>
@@ -195,7 +176,6 @@ function route(initial = false) {
   const home = ['hem', 'klubben', 'aktuellt', 'innehall'].includes(requested);
   const view = home ? 'hem' : requested;
   const params = new URLSearchParams(query);
-  closeMenu();
   if (view !== currentView || view === 'dokument') {
     currentView = view;
     if (view === 'hem') { main.innerHTML = homeView(); setupGallery(); }

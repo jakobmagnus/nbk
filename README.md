@@ -34,4 +34,4 @@ Kontakt och medlemsansökan valideras i webbläsaren och förbereder ett e-postu
 
 ## Tillgänglighet
 
-Semantiska sektioner, tangentbordsnavigation, synlig fokusmarkering, länk för att hoppa till innehållet, skärmläsaretiketter, dialog för bilder, mobilmeny med Escape-stöd och stöd för minskad rörelse. Färgtemat följer systemet tills användaren väljer själv och sparas sedan lokalt.
+Semantiska sektioner, tangentbordsnavigation, synlig fokusmarkering, länk för att hoppa till innehållet, skärmläsaretiketter, dialog för bilder och stöd för minskad rörelse. Menyn och färgtemaknappen ligger under vimpeln på både stor och liten skärm. Färgtemat följer systemet tills användaren väljer själv och sparas sedan lokalt.
