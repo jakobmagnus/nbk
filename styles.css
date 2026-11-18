@@ -214,6 +214,7 @@ em {
 }
 
 .header-navigation a {
+  white-space:nowrap;
   padding:8px 0;
   position:relative;
 }
@@ -398,6 +399,19 @@ em {
   margin-bottom:22px;
 }
 
+.section-heading h1 {
+  font-size:clamp(36px,3.5vw,52px);
+}
+
+.page-breadcrumb {
+  padding-top:32px;
+  margin-bottom:0;
+}
+
+.standalone-section.section {
+  padding-block:45px 70px;
+}
+
 .section-heading>p:not(.eyebrow) {
   color:var(--muted);
   max-width:300px;
@@ -474,7 +488,7 @@ em {
   padding-right:25px;
 }
 
-.club-copy h2 {
+.club-copy h1,.club-copy h2 {
   font-size:clamp(40px,4vw,58px);
   margin-top:20px;
 }
@@ -1242,7 +1256,7 @@ em {
 
 @media(max-width:760px) {
   html {
-    scroll-padding-top:170px;
+    scroll-padding-top:210px;
   }
   .wrap {
     width:calc(100% - 40px);
@@ -1252,8 +1266,13 @@ em {
     padding:16px 0 14px;
   }
   .header-navigation {
-    gap:16px;
+    display:grid;
+    grid-template-columns:repeat(4,max-content);
+    gap:4px 20px;
     font-size:11px;
+  }
+  .header-navigation a[href="/medlem/"] {
+    grid-column:span 2;
   }
   .brand {
     gap:2px;
@@ -1350,7 +1369,7 @@ em {
   .club-image {
     height:380px;
   }
-  .club-copy h2 {
+  .club-copy h1,.club-copy h2 {
     font-size:44px;
   }
   .club-copy>p:not(.eyebrow) {

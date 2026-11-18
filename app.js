@@ -1,3 +1,5 @@
+import { pages, legacyPaths, findPage } from './routes.js';
+
 const icons = {
   moon: '<path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/>',
   sun: '<circle cx="12" cy="12" r="3.5"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
@@ -21,7 +23,6 @@ document.querySelector('.skip-link').addEventListener('click', e => {
 });
 let documents = [];
 let documentError = false;
-let currentView = '';
 
 function updateThemeButton() {
   const dark = document.documentElement.dataset.theme === 'dark';
@@ -60,7 +61,7 @@ function homeView() {
     <section class="hero" aria-labelledby="hero-title">
       <h1 class="sr-only" id="hero-title">Nockebyhovs Båtklubb</h1>
       <figure class="hero-image"><img src="/assets/photos/20220806_133221.jpg" width="2000" height="946" alt="Nockebyhovs båtklubbs bryggor och båtar, omgivna av vatten och grönska" fetchpriority="high"><figcaption class="image-caption"><div><p class="eyebrow">EN LITEN HAMN. MYCKET ATT TYCKA OM.</p><p>Grönviksvägen 192, Bromma</p></div><span class="compass" aria-hidden="true">↗</span></figcaption></figure>
-      <nav class="quick-links" aria-label="Snabbval"><a class="quick-link" href="#medlem"><div><h2>En plats för din båt</h2><p>Medlemskap & båtplats</p></div><span class="arrow" aria-hidden="true">↗</span></a><a class="quick-link" href="#dokument"><div><h2>Bra att ha till hands</h2><p>Dokument, regler & intyg</p></div><span class="arrow" aria-hidden="true">↗</span></a><a class="quick-link" href="#kontakt"><div><h2>Vi finns här</h2><p>Kontakt & hitta hit</p></div><span class="arrow" aria-hidden="true">↗</span></a></nav>
+      <nav class="quick-links" aria-label="Snabbval"><a class="quick-link" href="/medlem/"><div><h2>En plats för din båt</h2><p>Medlemskap & båtplats</p></div><span class="arrow" aria-hidden="true">↗</span></a><a class="quick-link" href="/dokument/"><div><h2>Bra att ha till hands</h2><p>Dokument, regler & intyg</p></div><span class="arrow" aria-hidden="true">↗</span></a><a class="quick-link" href="/kontakt/"><div><h2>Vi finns här</h2><p>Kontakt & hitta hit</p></div><span class="arrow" aria-hidden="true">↗</span></a></nav>
     </section>
     <section id="aktuellt" class="section section-split" aria-labelledby="news-title"><div class="section-heading"><p class="eyebrow">FRÅN KLUBBEN</p><h2 id="news-title">Livet kring<br>bryggan.</h2><p>Hälsningar, påminnelser och sådant som är bra att känna till.</p><a class="text-link" href="/assets/documents/arsplanering.pdf" target="_blank" rel="noopener noreferrer">Se klubbens årsplanering ${arrow}</a></div>
       <div class="news-list"><article class="news-item"><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> VIKTIG PÅMINNELSE</p><h3>Har du lämnat ditt båtbottenintyg?</h3><p>Lämna in intyget om båtbottenfärg och meddela klubben om du har bytt båt. Blanketten går att ladda ner och skriva ut.</p><a class="text-link" href="/assets/documents/intyg-om-batbottenfarg-for-utskrift.pdf" target="_blank" rel="noopener noreferrer">Hämta intyget ${arrow}</a></article>
@@ -68,14 +69,37 @@ function homeView() {
       <article class="news-item"><p class="eyebrow">TRYGGHET I HAMNEN</p><h3>Kamerabevakning på plats</h3><p>Hamnen har övervakningskameror med hög upplösning. Vid inbrott eller skadegörelse kan inspelningar lämnas till polisen.</p><a class="text-link" href="/assets/documents/kamerabevakning.pdf" target="_blank" rel="noopener noreferrer">Om kamerabevakningen ${arrow}</a></article></div>
     </section>
   </div>
-  <section id="klubben" class="section club-section" aria-labelledby="club-title"><div class="wrap club-grid"><img class="club-image" src="/assets/photos/20200910_132306.jpg" alt="Båtliv vid Nockebyhovs Båtklubb" loading="lazy" width="900" height="1000"><div class="club-copy"><p class="eyebrow muted">NOCKEBYHOVS BÅTKLUBB</p><h2 id="club-title">Nära staden.<br><em>Ännu närmare sjön.</em></h2><p>En brygga att komma tillbaka till. En plats för ett morgondopp, en kopp kaffe och samtal som fortsätter tills solen går ner.</p><p>Du hittar oss på Grönviksvägen 192 i Bromma. Vill du ha din båt här? Välkommen att skicka in en ansökan.</p><div class="club-facts"><div><strong>Grönviksvägen 192</strong><span>Bromma, Stockholm</span></div><div><strong>59°19.7′ N · 17°54.6′ E</strong><span>Här ligger vår hamn</span></div></div><a class="text-link" href="#medlem">Ansök om båtplats ${arrow}</a></div></div></section>
-  <div class="wrap"><section class="environment" aria-labelledby="environment-title"><div><p class="eyebrow">OMTANKE OM VÅRT VATTEN</p><h2 id="environment-title">Ett finare båtliv<br><em>börjar under ytan.</em></h2></div><div class="environment-copy"><p>För att få en ny båtplats ska båten vara utan biocidhaltig bottenfärg och inte ha en tvåtaktsmotor med förgasare.</p><ul><li>Biocidfri bottenfärg eller en omålad båtbotten.</li><li>Intyg om båtbottenfärg lämnas till klubben.</li><li>Uppdatera dina uppgifter när du byter båt.</li></ul><a class="text-link" href="#dokument?filter=Milj%C3%B6">Läs mer i våra miljödokument ${arrow}</a></div></section>
+  <section id="klubben" class="section club-section" aria-labelledby="club-title"><div class="wrap club-grid"><img class="club-image" src="/assets/photos/20200910_132306.jpg" alt="Båtliv vid Nockebyhovs Båtklubb" loading="lazy" width="900" height="1000"><div class="club-copy"><p class="eyebrow muted">NOCKEBYHOVS BÅTKLUBB</p><h2 id="club-title">Nära staden.<br><em>Ännu närmare sjön.</em></h2><p>En brygga att komma tillbaka till. En plats för ett morgondopp, en kopp kaffe och samtal som fortsätter tills solen går ner.</p><p>Du hittar oss på Grönviksvägen 192 i Bromma. Vill du ha din båt här? Välkommen att skicka in en ansökan.</p><div class="club-facts"><div><strong>Grönviksvägen 192</strong><span>Bromma, Stockholm</span></div><div><strong>59°19.7′ N · 17°54.6′ E</strong><span>Här ligger vår hamn</span></div></div><a class="text-link" href="/medlem/">Ansök om båtplats ${arrow}</a></div></div></section>
+  <div class="wrap"><section class="environment" aria-labelledby="environment-title"><div><p class="eyebrow">OMTANKE OM VÅRT VATTEN</p><h2 id="environment-title">Ett finare båtliv<br><em>börjar under ytan.</em></h2></div><div class="environment-copy"><p>För att få en ny båtplats ska båten vara utan biocidhaltig bottenfärg och inte ha en tvåtaktsmotor med förgasare.</p><ul><li>Biocidfri bottenfärg eller en omålad båtbotten.</li><li>Intyg om båtbottenfärg lämnas till klubben.</li><li>Uppdatera dina uppgifter när du byter båt.</li></ul><a class="text-link" href="/dokument/?filter=Milj%C3%B6">Läs mer i våra miljödokument ${arrow}</a></div></section>
   <section class="section" aria-labelledby="gallery-title"><div class="gallery-heading"><div><p class="eyebrow">SMÅ ÖGONBLICK FRÅN HAMNEN</p><h2 id="gallery-title">Här vill man stanna.</h2></div><div class="gallery-buttons"><button class="icon-button gallery-prev" aria-label="Föregående bilder">←</button><button class="icon-button gallery-next" aria-label="Nästa bilder">→</button></div></div><div class="gallery">${photos.map(([file, title], i) => `<figure><button class="photo-button" type="button" data-photo="${file}" data-caption="${title}" aria-label="Visa större bild: ${title}"><img src="/assets/photos/${file}" alt="${title}" loading="lazy" width="600" height="450"></button><figcaption><span>${title}</span><span>${String(i + 1).padStart(2, '0')} / ${String(photos.length).padStart(2, '0')}</span></figcaption></figure>`).join('')}</div></section>
-  <section class="join-banner"><div><p class="eyebrow">VÄLKOMMEN TILL NBK</p><h2>Ska vi ses på bryggan?</h2></div><a class="button" href="#medlem">Ansök om båtplats ${arrow}</a></section></div>`;
+  <section class="join-banner"><div><p class="eyebrow">VÄLKOMMEN TILL NBK</p><h2>Ska vi ses på bryggan?</h2></div><a class="button" href="/medlem/">Ansök om båtplats ${arrow}</a></section></div>`;
 }
 
 function pageIntro(label, eyebrow, title, description) {
-  return `<section class="page-intro"><p class="breadcrumb"><a href="#hem">Startsida</a><span aria-hidden="true">/</span><span>${label}</span></p><p class="eyebrow">${eyebrow}</p><h1>${title}</h1><p class="intro-description">${description}</p></section>`;
+  return `<section class="page-intro"><p class="breadcrumb"><a href="/">Startsida</a><span aria-hidden="true">/</span><span>${label}</span></p><p class="eyebrow">${eyebrow}</p><h1>${title}</h1><p class="intro-description">${description}</p></section>`;
+}
+
+function clubView() {
+  const template = document.createElement('template');
+  template.innerHTML = homeView();
+  const club = template.content.querySelector('#klubben');
+  club.classList.add('standalone-section');
+  const heading = club.querySelector('#club-title');
+  heading.outerHTML = `<h1 id="club-title">${heading.innerHTML}</h1>`;
+  const environment = template.content.querySelector('.environment');
+  const gallery = template.content.querySelector('.gallery').closest('section');
+  const join = template.content.querySelector('.join-banner');
+  return `<div class="wrap"><p class="breadcrumb page-breadcrumb"><a href="/">Startsida</a><span aria-hidden="true">/</span><span>Klubben</span></p></div>${club.outerHTML}<div class="wrap">${environment.outerHTML}${gallery.outerHTML}${join.outerHTML}</div>`;
+}
+
+function newsView() {
+  const template = document.createElement('template');
+  template.innerHTML = homeView();
+  const news = template.content.querySelector('#aktuellt');
+  news.classList.add('standalone-section');
+  const heading = news.querySelector('#news-title');
+  heading.outerHTML = `<h1 id="news-title">${heading.innerHTML}</h1>`;
+  return `<div class="wrap"><p class="breadcrumb page-breadcrumb"><a href="/">Startsida</a><span aria-hidden="true">/</span><span>Aktuellt</span></p>${news.outerHTML}</div>`;
 }
 
 function documentView() {
@@ -98,7 +122,7 @@ function setupDocuments(params) {
   };
   document.querySelectorAll('[data-filter]').forEach(b => b.addEventListener('click', () => {
     filter = b.dataset.filter;
-    history.replaceState(null, '', filter === 'Alla' ? '#dokument' : '#dokument?filter=' + encodeURIComponent(filter));
+    history.replaceState(null, '', filter === 'Alla' ? '/dokument/' : '/dokument/?filter=' + encodeURIComponent(filter));
     update();
   }));
   search.addEventListener('input', update);
@@ -168,31 +192,33 @@ photoDialog.querySelector('.close-photo').addEventListener('click', () => photoD
 photoDialog.addEventListener('click', e => { if (e.target === photoDialog) photoDialog.close(); });
 photoDialog.addEventListener('close', () => { photoDialog.querySelector('img').removeAttribute('src'); });
 
-function route(initial = false) {
-  const legacy = { '/kontakt.html': 'kontakt', '/Dokument.html': 'dokument', '/medlem.html': 'medlem' };
-  if (!location.hash && legacy[location.pathname]) { history.replaceState(null, '', '/#' + legacy[location.pathname]); }
-  const [hash, query = ''] = location.hash.slice(1).split('?');
-  const requested = hash || 'hem';
-  const home = ['hem', 'klubben', 'aktuellt', 'innehall'].includes(requested);
-  const view = home ? 'hem' : requested;
-  const params = new URLSearchParams(query);
-  if (view !== currentView || view === 'dokument') {
-    currentView = view;
-    if (view === 'hem') { main.innerHTML = homeView(); setupGallery(); }
-    else if (view === 'dokument') { main.innerHTML = documentView(); setupDocuments(params); }
-    else if (view === 'medlem') { main.innerHTML = memberView(); setupForm('member'); }
-    else if (view === 'kontakt') { main.innerHTML = contactView(); setupForm('contact'); }
-    else { main.innerHTML = '<section class="wrap error-page"><p class="eyebrow">SIDAN FINNS INTE</p><h1>Vi hittar inte <em>den här platsen.</em></h1><p>Följ med tillbaka till bryggan.</p><a class="button" href="#hem" style="margin-top:25px">Till startsidan ↗</a></section>'; }
-    if (!initial) main.focus({ preventScroll: true });
+function redirectLegacyLocation() {
+  const [oldKey, oldQuery = ''] = location.hash.slice(1).split('?');
+  const oldPage = pages.find(page => page.key === oldKey);
+  if (oldPage || legacyPaths[location.pathname]) {
+    const target = oldPage?.path || legacyPaths[location.pathname];
+    location.replace(target + (oldQuery ? '?' + oldQuery : location.search));
+    return true;
   }
-  document.title = ({ hem: 'Nockebyhovs Båtklubb — En plats vid vattnet', dokument: 'Dokument — Nockebyhovs Båtklubb', medlem: 'Medlem & ansökan — Nockebyhovs Båtklubb', kontakt: 'Kontakt — Nockebyhovs Båtklubb' })[view] || 'Sidan finns inte — Nockebyhovs Båtklubb';
-  document.querySelectorAll('.header a[href^="#"]').forEach(a => {
-    if (a.getAttribute('href') === '#' + requested) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
-  });
-  requestAnimationFrame(() => {
-    const section = home && ['klubben', 'aktuellt', 'innehall'].includes(requested) ? document.getElementById(requested) : null;
-    if (section) section.scrollIntoView({ behavior: initial ? 'instant' : 'smooth', block: 'start' });
-    else window.scrollTo({ top: 0, behavior: 'instant' });
+  return false;
+}
+
+function renderPage() {
+  if (redirectLegacyLocation()) return;
+  const page = findPage(location.pathname);
+  const view = page?.key;
+  if (view === 'hem') main.innerHTML = homeView();
+  else if (view === 'klubben') main.innerHTML = clubView();
+  else if (view === 'aktuellt') main.innerHTML = newsView();
+  else if (view === 'dokument') { main.innerHTML = documentView(); setupDocuments(new URLSearchParams(location.search)); }
+  else if (view === 'medlem') { main.innerHTML = memberView(); setupForm('member'); }
+  else if (view === 'kontakt') { main.innerHTML = contactView(); setupForm('contact'); }
+  else main.innerHTML = '<section class="wrap error-page"><p class="eyebrow">SIDAN FINNS INTE</p><h1>Vi hittar inte <em>den här platsen.</em></h1><p>Följ med tillbaka till bryggan.</p><a class="button" href="/" style="margin-top:25px">Till startsidan ↗</a></section>';
+  if (document.querySelector('.gallery')) setupGallery();
+  document.title = page?.title || 'Sidan finns inte — Nockebyhovs Båtklubb';
+  document.querySelectorAll('.header-navigation a').forEach(a => {
+    if (a.getAttribute('href') === page?.path) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
   });
 }
 
@@ -201,12 +227,5 @@ try {
   if (!response.ok) throw new Error('Document index unavailable');
   documents = await response.json();
 } catch { documentError = true; }
-window.addEventListener('hashchange', () => route());
-document.addEventListener('click', e => {
-  const link = e.target.closest('a[href^="#"]');
-  if (link && !link.classList.contains('skip-link') && link.getAttribute('href') === location.hash) {
-    e.preventDefault();
-    route();
-  }
-});
-route(true);
+window.addEventListener('hashchange', redirectLegacyLocation);
+renderPage();

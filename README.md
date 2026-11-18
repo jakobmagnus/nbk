@@ -15,10 +15,11 @@ npm run dev
 ```sh
 npm run check
 npm run build
+npm run check:pages
 npm start
 ```
 
-`dist/` kan publiceras hos valfri statisk webbhost. Tidigare adresser `/kontakt.html`, `/Dokument.html` och `/medlem.html` leder vidare till motsvarande nya vy.
+`dist/` kan publiceras hos valfri statisk webbhost. Varje sida har en egen HTML-fil och adress: `/`, `/klubben/`, `/aktuellt/`, `/dokument/`, `/medlem/` och `/kontakt/`. Alla sex sidor finns i huvudmenyn. Gamla `.html`-adresser och tidigare `#`-länkar leder vidare till motsvarande nya sida. Dokumentfilter använder vanliga frågeparametrar, exempelvis `/dokument/?filter=Milj%C3%B6`.
 
 ## Innehåll
 
