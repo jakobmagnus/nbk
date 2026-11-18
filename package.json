@@ -1,0 +1,14 @@
+{
+  "name": "nockebyhovs-batklubb",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Nockebyhovs Båtklubb — en plats vid vattnet i Bromma.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs --dist",
+    "build": "node scripts/build.mjs",
+    "check": "node --check app.js && node scripts/check.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

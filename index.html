@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="sv" data-theme="light">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8f4">
+    <meta name="description" content="Välkommen till Nockebyhovs Båtklubb i Bromma. Ansök om båtplats, hitta klubbens dokument och kontakta oss på Grönviksvägen 192.">
+    <title>Nockebyhovs Båtklubb — En plats vid vattnet</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/vimpel-light.svg">
+    <link rel="preload" as="image" href="/assets/photos/20220806_133221.jpg">
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+      try {
+        const saved = localStorage.getItem('nbk-theme');
+        document.documentElement.dataset.theme = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      } catch {}
+    </script>
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#innehall">Hoppa till innehållet</a>
+    <header class="header">
+      <div class="header-inner">
+        <nav class="nav-left" aria-label="Huvudnavigation">
+          <a href="#klubben">Klubben</a>
+          <a href="#aktuellt">Aktuellt</a>
+          <a href="#dokument">Dokument</a>
+        </nav>
+        <a class="brand" href="#hem" aria-label="Nockebyhovs Båtklubb — startsida">
+          <img class="pennant pennant-light" src="/assets/vimpel-light.svg" alt="NBK:s klubbvimpel" width="130" height="85">
+          <img class="pennant pennant-dark" src="/assets/vimpel-dark.svg" alt="NBK:s klubbvimpel, vit med svarta bokstäver" width="130" height="85">
+          <span>Nockebyhovs Båtklubb</span>
+        </a>
+        <div class="nav-right">
+          <a class="contact-link" href="#kontakt">Kontakt</a>
+          <button class="theme-toggle icon-button" type="button" aria-label="Byt till mörkt läge" aria-pressed="false"></button>
+          <a class="header-apply" href="#medlem">Bli medlem <span aria-hidden="true">↗</span></a>
+          <button class="menu-toggle icon-button" type="button" aria-label="Öppna menyn" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+        </div>
+      </div>
+      <nav class="mobile-nav" id="mobile-nav" aria-label="Mobilnavigation" hidden>
+        <a href="#hem">Startsida</a><a href="#klubben">Klubben</a><a href="#aktuellt">Aktuellt</a><a href="#dokument">Dokument</a><a href="#kontakt">Kontakt</a><a href="#medlem">Medlem & båtplats ↗</a>
+      </nav>
+    </header>
+    <main id="innehall" tabindex="-1"></main>
+    <footer class="footer">
+      <div class="footer-top wrap">
+        <div class="footer-brand"><p>Nockebyhovs<br>Båtklubb<span class="small-dot">.</span></p><span>Vi ses på bryggan.</span></div>
+        <div><p class="eyebrow">HITTA HIT</p><a href="https://www.google.com/maps/search/?api=1&query=Nockebyhovs+B%C3%A5tklubb+Gr%C3%B6nviksv%C3%A4gen+192+Bromma" target="_blank" rel="noopener noreferrer">Grönviksvägen 192 <span aria-hidden="true">↗</span><br>Bromma, Stockholm</a><p class="coordinates">59°19.7′ N &nbsp; 17°54.6′ E</p></div>
+        <div><p class="eyebrow">HÖR AV DIG</p><a href="mailto:info@nockebyhovsbatklubb.se">info@nockebyhovsbatklubb.se</a><br><a href="tel:+46706002556">070-600 25 56</a><p class="footer-chair">Ordförande</p></div>
+        <div class="footer-links"><p class="eyebrow">GENVÄGAR</p><a href="#dokument">Dokument</a><a href="#medlem">Medlem & ansökan</a><a href="#kontakt">Kontakt</a></div>
+      </div>
+      <div class="footer-bottom wrap"><span>© <span id="year"></span> Nockebyhovs Båtklubb</span><div><a href="https://svenskasjo.se/" target="_blank" rel="noopener noreferrer">Svenska Sjö ↗</a><a href="/assets/documents/gdpr-policy.pdf" target="_blank" rel="noopener noreferrer">Dataskydd</a><a href="/assets/documents/kamerabevakning.pdf" target="_blank" rel="noopener noreferrer">Kamerabevakning</a><a href="#kontakt">Synpunkter på webbplatsen ↗</a></div></div>
+    </footer>
+    <dialog id="photo-dialog" class="photo-dialog" aria-label="Bild från hamnen"><button class="icon-button close-photo" type="button" aria-label="Stäng bild">×</button><img alt=""><p></p></dialog>
+    <noscript><p class="noscript">Aktivera JavaScript för att se webbplatsen. Du kan också besöka <a href="https://nockebyhovsbatklubb.se/">klubbens befintliga webbplats</a>.</p></noscript>
+  </body>
+</html>
